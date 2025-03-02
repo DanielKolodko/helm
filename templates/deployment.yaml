@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "cat-gifs.fullname" . }}-flask
+  labels:
+    app: flask-app
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: flask-app
+  template:
+    metadata:
+      labels:
+        app: flask-app
+    spec:
+      containers:
+        - name: flask-app
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 5000
+          env:
+            - name: FLASK_APP
+              value: {{ .Values.flask.app | quote }}
+            - name: FLASK_ENV
+              value: {{ .Values.flask.env | quote }}
+            - name: SQLALCHEMY_DATABASE_URI
+              value: {{ .Values.flask.databaseUri | quote }}
