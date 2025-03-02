@@ -3,16 +3,19 @@ kind: Deployment
 metadata:
   name: {{ include "cat-gifs.fullname" . }}-flask
   labels:
-    app: flask-app
+    app.kubernetes.io/name: cat-gifs
+    app.kubernetes.io/instance: my-release
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: flask-app
+      app.kubernetes.io/name: cat-gifs
+      app.kubernetes.io/instance: my-release
   template:
     metadata:
       labels:
-        app: flask-app
+        app.kubernetes.io/name: cat-gifs
+        app.kubernetes.io/instance: my-release
     spec:
       containers:
         - name: flask-app
