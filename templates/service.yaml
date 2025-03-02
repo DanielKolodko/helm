@@ -1,35 +1,15 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
 metadata:
-  name: {{ include "cat-gifs.fullname" . }}-flask
+  name: {{ include "cat-gifs.fullname" . }}
   labels:
-    app.kubernetes.io/name: cat-gifs
-    app.kubernetes.io/instance: my-release
-    app: flask-app
+    {{- include "cat-gifs.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort | quote }}
+      protocol: TCP
+      name: http
   selector:
-    matchLabels:
-      app.kubernetes.io/name: cat-gifs
-      app.kubernetes.io/instance: my-release
-      app: flask-app
-  template:
-    metadata:
-      labels:
-        app.kubernetes.io/name: cat-gifs
-        app.kubernetes.io/instance: my-release
-        app: flask-app   # Add this line to match the Service selector if needed
-    spec:
-      containers:
-        - name: flask-app
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - containerPort: 5000
-          env:
-            - name: FLASK_APP
-              value: {{ .Values.flask.app | quote }}
-            - name: FLASK_ENV
-              value: {{ .Values.flask.env | quote }}
-            - name: SQLALCHEMY_DATABASE_URI
-              value: {{ .Values.flask.databaseUri | quote }}
+    app: flask-app
