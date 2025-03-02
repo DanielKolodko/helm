@@ -9,6 +9,6 @@ entries:
     name: cat-gifs
     type: application
     urls:
-    - https://danielkolodko.github.io/helm/helm/helm/cat-gifs-0.1.0.tgz
+    - https://danielkolodko.github.io/helm/helm/cat-gifs-0.1.0.tgz
     version: 0.1.0
 generated: "2025-03-02T16:51:03.0408853+02:00"
