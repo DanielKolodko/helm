@@ -3,12 +3,12 @@ entries:
   cat-gifs:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-03-02T10:22:16.0248172+02:00"
+    created: "2025-03-02T12:23:03.6282344+02:00"
     description: A Helm chart for Kubernetes
-    digest: 77ee74f8d9dd082045640e532420273a7f125625892b024dcc26bf7c8e5421dc
+    digest: a89fcf265d0128f5ba233309c2d891856adb8f1075bd0b60da04055aaf4cbbc3
     name: cat-gifs
     type: application
     urls:
     - https://danielkolodko.github.io/helm/helm/cat-gifs-0.1.0.tgz
     version: 0.1.0
-generated: "2025-03-02T10:22:16.0236909+02:00"
+  
