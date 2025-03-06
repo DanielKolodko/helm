@@ -45,6 +45,8 @@ seed:
 serviceAccount:
   create: false
   name: ""
+  automount: true
+  annotations: {}
 
 ingress:
   enabled: true
