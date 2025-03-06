@@ -4,6 +4,10 @@ metadata:
   name: {{ include "cat-gifs.fullname" . }}
   labels:
     {{- include "cat-gifs.labels" . | nindent 4 }}
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/path: "/metrics"
+    prometheus.io/port: "{{ .Values.service.targetPort }}"
 spec:
   type: {{ .Values.service.type }}
   ports:

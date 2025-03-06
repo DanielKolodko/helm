@@ -23,3 +23,15 @@ autoscaling:
   minReplicas: 1
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
+
+prometheusStack:
+  enabled: true
+  grafana:
+    ingress:
+      enabled: true
+      hosts:
+        - grafana.example.com
+    adminPassword: "MySecretPassword"
+
+standaloneGrafana:
+  enabled: false
