@@ -1,15 +1,10 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: "{{ include "cat-gifs.fullname" . }}-test-connection"
-  labels:
-    {{- include "cat-gifs.labels" . | nindent 4 }}
-  annotations:
-    "helm.sh/hook": test
+  name: {{ include "cats.fullname" . }}-test
 spec:
   containers:
-    - name: wget
-      image: busybox
-      command: ['wget']
-      args: ['{{ include "cat-gifs.fullname" . }}:{{ .Values.service.port }}']
-  restartPolicy: Never
+  - name: test
+    image: busybox
+    command: ['sh', '-c', 'echo Hello World']
+
