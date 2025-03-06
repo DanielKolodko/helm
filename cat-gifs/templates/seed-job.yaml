@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "cats.fullname" . }}-seed-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: seed
+        image: "{{ .Values.seed.image.repository }}:{{ .Values.seed.image.tag }}"
+        command:
+          - "sh"
+          - "-c"
+          - >
+            mysql -h {{ include "cats.fullname" . }}-mysql
+            -u {{ .Values.mysql.secret.user }}
+            -p{{ .Values.mysql.secret.password }}
+            {{ .Values.mysql.secret.database }} < /dump/dump.sql
+        volumeMounts:
+          - name: dump-volume
+            mountPath: /dump
+      restartPolicy: OnFailure
+      volumes:
+        - name: dump-volume
+          configMap:
+            name: {{ .Values.seed.dumpConfigMap }}

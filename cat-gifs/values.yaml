@@ -1,0 +1,43 @@
+# Global configuration for the Flask app
+flask:
+  replicaCount: 1
+  image:
+    repository: danielkolodko/cat-gifs-app
+    tag: latest
+    pullPolicy: IfNotPresent
+  servicePort: 5000         # Container port
+  service:
+    externalPort: 80        # Exposed port via LoadBalancer
+    type: LoadBalancer
+  metricsPort: 5000
+  SQLALCHEMY_DATABASE_URI: "mysql+pymysql://catuser:catpassword@{{ include \"cats.fullname\" . }}-mysql/catgifs"
+
+# ConfigMap values for Flask configuration
+configmap:
+  FLASK_APP: "app.py"
+  FLASK_ENV: "production"
+
+# MySQL configuration
+mysql:
+  replicaCount: 1
+  image:
+    repository: mysql
+    tag: "8.0"
+    pullPolicy: IfNotPresent
+  service:
+    port: 3306
+    type: ClusterIP
+  secret:
+    rootPassword: "eroot"
+    database: "catgifs"
+    user: "catuser"
+    password: "catpassword"
+  persistence:
+    storage: "5Gi"
+
+# Seed job configuration
+seed:
+  image:
+    repository: mysql
+    tag: "8.0"
+  dumpConfigMap: "db-dump-config"   # Name of the ConfigMap that holds your SQL dump (if you have one)

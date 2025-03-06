@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "cats.fullname" . }}-flask
+spec:
+  replicas: {{ .Values.flask.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "cats.name" . }}-flask
+  template:
+    metadata:
+      labels:
+        app: {{ include "cats.name" . }}-flask
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "{{ .Values.flask.metricsPort }}"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+      - name: {{ include "cats.name" . }}-flask
+        image: "{{ .Values.flask.image.repository }}:{{ .Values.flask.image.tag }}"
+        imagePullPolicy: {{ .Values.flask.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.flask.servicePort }}
+        env:
+          - name: FLASK_APP
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cats.fullname" . }}-config
+                key: FLASK_APP
+          - name: FLASK_ENV
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "cats.fullname" . }}-config
+                key: FLASK_ENV
+          - name: SQLALCHEMY_DATABASE_URI
+            value: {{ .Values.flask.SQLALCHEMY_DATABASE_URI | quote }}
+      imagePullSecrets:
+      - name: regcred
