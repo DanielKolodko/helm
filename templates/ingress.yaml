@@ -22,7 +22,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: {{ include "cats.fullname" $. }}-flask
+            name: {{ printf "%s-flask" (include "cats.fullname" $) }}
             port:
               number: {{ $.Values.flask.service.externalPort }}
       {{- end }}
