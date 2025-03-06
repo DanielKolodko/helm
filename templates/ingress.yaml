@@ -13,6 +13,7 @@ spec:
 {{ toYaml .Values.ingress.tls | indent 4 }}
 {{- end }}
   rules:
+  {{- $fullname := include "cats.fullname" . }}
   {{- range .Values.ingress.hosts }}
   - host: {{ .host | quote }}
     http:
@@ -22,7 +23,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: {{ printf "%s-flask" (include "cats.fullname" $) }}
+            name: {{ printf "%s-flask" $fullname }}
             port:
               number: {{ $.Values.flask.service.externalPort }}
       {{- end }}
