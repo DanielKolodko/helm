@@ -41,3 +41,7 @@ seed:
     repository: mysql
     tag: "8.0"
   dumpConfigMap: "db-dump-config"   # Name of the ConfigMap that holds your SQL dump (if you have one)
+
+serviceAccount:
+  create: false
+  name: ""
