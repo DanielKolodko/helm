@@ -45,3 +45,17 @@ seed:
 serviceAccount:
   create: false
   name: ""
+
+  ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+  hosts:
+    - host: mycats.example.com
+      paths:
+        - /
+  tls:
+    - secretName: mycats-tls
+      hosts:
+        - mycats.example.com
+
