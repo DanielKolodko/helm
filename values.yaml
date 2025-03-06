@@ -25,6 +25,9 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
 
 prometheusStack:
+  prometheusOperator:
+  extraArgs:
+    - "--log.level=debug"  # if you want more detail
   enabled: true
   grafana:
     ingress:
