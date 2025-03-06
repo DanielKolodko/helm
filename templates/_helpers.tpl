@@ -6,7 +6,17 @@ Return the fully qualified app name.
 {{- end }}
 
 {{/*
-Return the short name.
+Common labels.
+*/}}
+{{- define "cats.labels" -}}
+app.kubernetes.io/name: {{ include "cats.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/version: {{ .Chart.AppVersion }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}
+
+{{/*
+Return the chart name.
 */}}
 {{- define "cats.name" -}}
 {{- default .Chart.Name .Values.nameOverride -}}
