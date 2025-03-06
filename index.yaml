@@ -3,13 +3,13 @@ entries:
   cats:
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-03-06T22:43:29.0939407+02:00"
+    created: "2025-03-06T22:47:29.8955709+02:00"
     description: A Helm chart for deploying the Cats Flask app with SQL database on
       Kubernetes (GKE)
-    digest: ce029448c285e75055119f64fecd382d5c64fa61710abbaa5a60649814882a68
+    digest: 53b126650d157cb8f45ce7c5128328815e8b8ef41ef03605bfab6c8ce5aa2915
     name: cats
     type: application
     urls:
     - https://danielkolodko.github.io/helm/cats-0.1.0.tgz
     version: 0.1.0
-generated: "2025-03-06T22:43:29.0756339+02:00"
+generated: "2025-03-06T22:47:29.894991+02:00"
