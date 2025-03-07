@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Release.Name }}-mysql-backup
+spec:
+  schedule: "0 3 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: mysql-backup
+              image: "google/cloud-sdk:latest"
+              env:
+                - name: MYSQL_HOST
+                  value: "my-cats-release-cats-mysql"
+                - name: MYSQL_USER
+                  value: "catuser"
+                - name: MYSQL_PASSWORD
+                  value: "catpassword"
+                - name: MYSQL_DATABASE
+                  value: "catgifs"
+                - name: BUCKET_NAME
+                  value: "my-sql-db-backup-bucket"
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  DATE=$(date +"%Y-%m-%d-%H-%M")
+                  mysqldump -h$MYSQL_HOST -u$MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DATABASE > /tmp/db-backup-$DATE.sql
+                  gsutil cp /tmp/db-backup-$DATE.sql gs://$BUCKET_NAME/db-backup-$DATE.sql
