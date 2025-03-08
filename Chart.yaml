@@ -2,5 +2,5 @@ apiVersion: v2
 name: cats
 description: A Helm chart for deploying the Cats Flask app with SQL database on Kubernetes (GKE)
 type: application
-version: "master"
-appVersion: "master"
+version: "1.0.0"
+appVersion: "1.0.0"
